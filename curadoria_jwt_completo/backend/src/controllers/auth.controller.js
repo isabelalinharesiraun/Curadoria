@@ -26,7 +26,7 @@ async function login(req, res, next) {
     const token = jwt.sign(
       { id: user.id, email: user.email },
       process.env.JWT_SECRET||'PALAVRA-SECRETA',
-      { expiresIn: process.env.JWT_EXPIRES_IN||'15m' }
+      { expiresIn: process.env.JWT_EXPIRES_IN||'1h' }
     );
 
     res.json({ accessToken: token });

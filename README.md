@@ -1,2 +1,0 @@
-# Curadoria
-Atividade do Wygor
