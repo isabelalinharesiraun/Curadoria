@@ -1,77 +1,39 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Curadoria JWT</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curadoria JWT</title>
 </head>
 <body>
-  <h1>Curadoria JWT</h1>
-  <p>Frontend simples. Use Postman ou fetch para consumir a API.</p>
-
-  <div id="items">
+    <nav>
+        <input type="button" onclick="register()" value="Cadastro">
+        <input type="button" onclick="login()" value="Login">
+        <input type="button" onclick="items_register()" value="Cadastro Item">
+        <input type="button" onclick="listar_itens()" value="Listar Itens">
+    </nav>
     
+    <div id="div_cadastro_usuario">
+        <form id="form_cadastro_usuario">
+            <label for="name">Nome</label>
+            <input type="next" name="name" id="name">
 
-    <script>
-      let global_token;
+            <label for="email">E-mail</label>
+            <input type="next" name="email" id="email">
 
-      async function login(){
-          const dados_login = {
-            "email":"isabela@email.com",
-            "password":"12345"
-          }
+            <hr>
 
-          const requisicao = await fetch('http://localhost:3001/auth/login',
-                {
-                  method :  'POST',
-                  headers : {
-                              'Content-Type':'application/json'
+            <label for="password">Senha</label>
+            <input type="password" name="password" id="password">
 
-                          },
-                          body: JSON.stringify(dados_login)
-                      }
-          )
-
-          if(!requisicao.ok){
-            return 1;
-          }
-          const resposta = await requisicao.json();
-          global_token = resposta.accessToken;
-          console.log(global_token)
-      }
-        async function carregar_items(){
+            <label for="confirma_password">Confirme a senha</label>
+            <input type="password" name="confirma_password" id="confirma_password">
         
-          const requisicao = await fetch('http://localhost:3001/items/',
-              {
-                  method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${global_token}`,
-                        'Content-Type': 'application/json' //Indica que espera/envia JSON
-                    }
-              }
-          );
+            <input type="button" value="Cadastrar" onclick="processa_cadastro_usuario()">
+        </form>
+    </div>
 
-              if(!requisicao.ok){
-                return 1;
-              }
-              let dados = await requisicao.json();
-              console.log(JSON.stringify(dados));
-
-              const div_items = document.getElementById("items");
-              div_items.innerHTML = dados.map(item => `
-                <h3 style="color": #567;">${item.title}</h3>
-                <h2><a href= '${item.url}'>${item.url}</a></h2>
-                  <h2>${item.notes}</h2>
-                  <h2>${item.tags}</h2>
-                  
-                `)
-        }
-        async function inicio(){
-            await login();
-            await carregar_items();
-        }
-        
-        inicio();
-        
-    </script>
+    <script src="./controle_api.js"></script>
+    <script src="./controle_tela.js"></script>
 </body>
 </html>
